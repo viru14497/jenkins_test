@@ -12,6 +12,11 @@ pipeline {
             ])
            }
          }
+        stage('Print Branch Name') {
+            steps {
+                sh 'echo "Building branch $BRANCH_NAME"'
+            }
+        }
         stage('Deploy') {
             when {
                 branch 'master'
