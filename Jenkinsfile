@@ -12,9 +12,9 @@ pipeline {
             ])
            }
          }
-        stage('Print Branch Name') {
+         stage('Print Last Commit Branch Name') {
             steps {
-                sh 'echo "Building branch $BRANCH_NAME"'
+                sh 'echo "Building commit on branch $GIT_BRANCH"'
             }
         }
         stage('Deploy') {
