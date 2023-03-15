@@ -13,8 +13,13 @@ pipeline {
            }
          }
          stage('Print Last Commit Branch Name') {
-            steps {
-                sh 'echo "Building commit on branch $GIT_BRANCH"'
+        when {
+            expression {
+            GIT_BRANCH = 'origin/' + sh(returnStdout: true, script: 'git reflog show --all | grep "$(git rev-parse HEAD | cut -c1-7)" | grep -o "refs/.*@" | grep -o /[a-zA-Z.0-9]*@|tail -c +2 | head -c -2').trim()
+            return (GIT_BRANCH == 'origin/master')
+        }
+        steps {
+                sh 'echo "Its $GIT_BRANCH"'
             }
         }
         stage('Deploy') {
